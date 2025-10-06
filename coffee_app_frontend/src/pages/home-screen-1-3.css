@@ -18,7 +18,7 @@
   --shadow-sm: 0 2px 6px rgba(0,0,0,0.06);
   --shadow-md: 0 6px 16px rgba(0,0,0,0.08);
 
-  --title-size: 28px; /* derived from Figma typo sizes visually matching height 58 with 2 lines */
+  --title-size: 28px; /* visually matches 58px height for two lines */
   --subtitle-size: 18px;
   --body-size: 14px;
 
@@ -51,18 +51,18 @@ html, body {
   background: var(--bg);
 }
 
-/* Ellipse 1 (203:66) at x=106, y=-355 relative to doc origin; adjust into our screen (visually top-right) */
+/* Ellipse 1 (203:66) */
 .ellipse-1 {
   position: absolute;
-  left: 290px; /* tuned to align near top-right visually */
-  top: 20px;
+  left: 291px; /* fine-tuned for 375px width */
+  top: 24px;
   width: 50px;
   height: 50px;
   border-radius: 999px;
   object-fit: cover;
 }
 
-/* Title "Find a coffee shop anywhere" (203:37) x=-165 y=-296 -> place near top-left area with visual spacing */
+/* Title (203:37) */
 .title {
   position: absolute;
   left: 24px;
@@ -72,28 +72,29 @@ html, body {
   height: 58px;
   font-size: var(--title-size);
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 29px; /* 2 lines -> total ~58px */
   letter-spacing: 0.2px;
   color: var(--text);
+  text-wrap: balance;
 }
 
-/* Search content frame (206:16) dimensions width 320 height 56 at top */
+/* Search content (206:16) */
 .search-content {
   position: absolute;
-  left: 24px; /* align with title's left edge */
-  top: 160px;
+  left: 24px;
+  top: 160px; /* 72px below title top to match JSON relationships */
   width: 320px;
   height: 56px;
   display: flex;
-  gap: 11px; /* space between search and filter to fit 320 (251 + 58 + gap around equals 320) */
+  gap: 11px; /* 251 + 11 + 58 = 320 */
 }
 
-/* Search (206:15) width 251 height 56 with style style_12 -> surface with radius and subtle border/shadow */
+/* Search (206:15) */
 .search {
   width: 251px;
   height: 56px;
   background: var(--surface);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xs);
   border: 1px solid rgba(17,24,39,0.08);
   display: flex;
@@ -101,7 +102,7 @@ html, body {
 }
 
 .search-inner {
-  margin-left: 13px; /* from JSON inner frame x=-152 to -165 is 13px left padding */
+  margin-left: 13px; /* inner frame x delta from JSON */
   display: flex;
   align-items: center;
   gap: 11px;
@@ -113,6 +114,11 @@ html, body {
   height: 24px;
   align-items: center;
   justify-content: center;
+}
+.search-icon img {
+  width: 16px;
+  height: 16px;
+  display: block;
 }
 
 .search-label {
@@ -127,18 +133,20 @@ html, body {
   border: none;
   outline: none;
   font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
   color: var(--muted);
   background: transparent;
   width: 180px;
 }
 .search-input::placeholder { color: var(--muted); }
 
-/* Filter (206:13) width 58 height 56 with rounded background */
+/* Filter (206:13) */
 .filter {
   width: 58px;
   height: 56px;
   border: none;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   background: var(--surface);
   box-shadow: var(--shadow-xs);
   border: 1px solid rgba(17,24,39,0.08);
@@ -157,13 +165,12 @@ html, body {
 .filter-line.top,
 .filter-line.bottom {
   position: absolute;
-  left: 10px; /* center adjust for visual match */
   width: 10px;
   height: 2px;
   background: var(--text);
   border-radius: 2px;
 }
-.filter-line.top { top: 5px; }
+.filter-line.top { top: 5px; left: 10px; }
 .filter-line.bottom { bottom: 3px; left: 0px; }
 
 .filter-dot-left {
@@ -181,14 +188,15 @@ html, body {
   border-radius: 50%;
 }
 
-/* Featured title (203:70) at y=-132 -> below search */
+/* Featured title (203:70) */
 .featured-title {
   position: absolute;
   left: 24px;
-  top: 236px;
+  top: 236px; /* 76px below search top as per JSON spacing */
   margin: 0;
   font-size: 16px;
   font-weight: 600;
+  line-height: 23px;
   letter-spacing: 0.2px;
   color: var(--text);
 }
@@ -202,14 +210,14 @@ html, body {
 }
 .card .card-media {
   position: relative;
-  width: 160px; /* group width in JSON */
-  height: 179px; /* for card 1 & 3 media groups */
+  width: 160px;
+  height: 179px; /* for card 1 & 3 */
 }
 .card .card-image {
   display: block;
   width: 153px;
   height: 168px;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   object-fit: cover;
   box-shadow: var(--shadow-sm);
 }
@@ -250,9 +258,9 @@ html, body {
 .card .card-info {
   position: absolute;
   left: 0;
-  top: 179px; /* below media group */
+  top: 179px; /* directly beneath media group */
   width: 153px;
-  height: 84px; /* per JSON */
+  height: 84px;
 }
 .card .card-title {
   margin: 0;
@@ -276,49 +284,35 @@ html, body {
 .card .star-outline {
   width: 13px; height: 12px;
   display: inline-block;
-  border: 1.5px solid #FACC15; /* amber-like star outline for placeholders */
+  border: 1.5px solid #FACC15;
   border-radius: 3px;
 }
 .card .rating-text {
   font-size: 12px;
+  letter-spacing: 0.2px;
   color: var(--muted);
 }
 .card .distance {
   margin: 6px 0 0 0;
   font-size: 12px;
+  letter-spacing: 0.2px;
   color: var(--muted);
 }
 
-/* Card 1 positioning */
-.card-1 {
-  left: 24px;
-  top: 268px;
-}
+/* Card positions mapped from JSON coordinates */
+.card-1 { left: 24px; top: 268px; }
 .card-1 .card-media .card-image { width: 153px; height: 168px; }
 
-/* Card 2 positioning */
-.card-2 {
-  left: 191px; /* 24 + 160 + 7 spacing */
-  top: 268px;
-}
+.card-2 { left: 191px; top: 268px; } /* 24 + 160 + 7 */
 .card-2 .card-media { height: 201px; }
 .card-2 .card-media .card-image { height: 190px; }
 
-/* Card 3 */
-.card-3 {
-  left: 24px;
-  top: 563px; /* 268 + 277 + ~18 spacing */
-}
-
-/* Card 4 */
-.card-4 {
-  left: 191px;
-  top: 563px;
-}
+.card-3 { left: 24px; top: 563px; } /* 268 + 277 + 18 gap */
+.card-4 { left: 191px; top: 563px; }
 .card-4 .card-media { height: 201px; }
 .card-4 .card-media .card-image.tall { height: 190px; }
 
-/* Bottom navigation */
+/* Bottom navigation (205:169) */
 .bottom-nav {
   position: absolute;
   left: 0;
@@ -334,7 +328,7 @@ html, body {
 }
 .bottom-nav .nav-item {
   position: relative;
-  width: 70px; height: 58px; /* max size to accommodate selected bg */
+  width: 70px; height: 58px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -352,20 +346,11 @@ html, body {
   top: 0; left: 0;
 }
 
-.home-icon {
-  position: relative;
-  width: 18px; height: 20px;
-}
+.home-icon { position: relative; width: 18px; height: 20px; }
+.heart-icon, .bookmark-icon { position: relative; }
+.user .user-dot { position: relative; }
 
-.heart-icon, .bookmark-icon {
-  position: relative;
-}
-
-.user .user-dot {
-  position: relative;
-}
-
-/* Hide non-selected background for other items */
+/* Non-selected items use intrinsic icon sizes */
 .nav-item.heart,
 .nav-item.bookmark,
 .nav-item.user {

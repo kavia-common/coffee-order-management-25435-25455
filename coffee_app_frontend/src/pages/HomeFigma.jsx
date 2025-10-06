@@ -13,7 +13,7 @@ function HomeFigma() {
   const rootRef = useRef(null);
 
   useEffect(() => {
-    // Adapt the simple behaviors from assets/home-screen-1-3.js without global leaks.
+    // Mirror the basic interactions from assets/home-screen-1-3.js without global leaks.
     const root = rootRef.current;
     if (!root) return;
 
@@ -24,17 +24,15 @@ function HomeFigma() {
       if (searchInput && typeof searchInput.focus === 'function') {
         try {
           searchInput.focus();
-        } catch (_) {
-          // no-op
+        } catch {
+          /* noop */
         }
       }
     };
-    if (search) {
-      search.addEventListener('click', onSearchClick);
-    }
+    if (search) search.addEventListener('click', onSearchClick);
 
     const nav = root.querySelector('.bottom-nav');
-    let cleanupFns = [];
+    const cleanupFns = [];
     if (nav) {
       const items = nav.querySelectorAll('.nav-item');
       items.forEach((item) => {
@@ -59,9 +57,7 @@ function HomeFigma() {
     }
 
     return () => {
-      if (search) {
-        search.removeEventListener('click', onSearchClick);
-      }
+      if (search) search.removeEventListener('click', onSearchClick);
       cleanupFns.forEach((fn) => fn());
     };
   }, []);
@@ -69,9 +65,9 @@ function HomeFigma() {
   return (
     <main id="screen-1-3" role="main" aria-label="Home Screen" ref={rootRef}>
       {/* Screen background */}
-      <div className="screen-bg" aria-hidden="true"></div>
+      <div className="screen-bg" aria-hidden="true" />
 
-      {/* Top right profile ellipse */}
+      {/* Top right profile ellipse (203:66) */}
       <img
         className="ellipse-1"
         src="/assets/figmaimages/figma_image_203_66.png"
@@ -82,14 +78,14 @@ function HomeFigma() {
         loading="eager"
       />
 
-      {/* Title */}
+      {/* Title (203:37) */}
       <h1 className="title" aria-label="Find a coffee shop anywhere">
         Find a coffee shop<br />anywhere
       </h1>
 
-      {/* Search content */}
+      {/* Search content (206:16) */}
       <section className="search-content" aria-label="Search and Filter">
-        {/* Search */}
+        {/* Search (206:15) */}
         <div className="search" role="search">
           <div className="search-inner">
             <span className="search-icon" aria-hidden="true">
@@ -110,11 +106,11 @@ function HomeFigma() {
             />
           </div>
         </div>
-        {/* Filter */}
+        {/* Filter (206:13) */}
         <button className="filter" type="button" aria-label="Filter">
           <span className="filter-icon" aria-hidden="true">
-            <span className="filter-line top"></span>
-            <span className="filter-line bottom"></span>
+            <span className="filter-line top" />
+            <span className="filter-line bottom" />
             <img
               className="filter-dot-left"
               src="/assets/figmaimages/figma_image_205_120.png"
@@ -122,15 +118,15 @@ function HomeFigma() {
               width="8"
               height="8"
             />
-            <span className="filter-dot-right"></span>
+            <span className="filter-dot-right" />
           </span>
         </button>
       </section>
 
-      {/* Featured label */}
+      {/* Featured label (203:70) */}
       <h2 className="featured-title">Featured coffee shops</h2>
 
-      {/* Card 1 */}
+      {/* Card 1 (205:112) */}
       <article className="card card-1" aria-label="Home Coffee Roasters, 4.5 1,200 reviews, 3.8 miles">
         <div className="card-media">
           <img
@@ -173,7 +169,7 @@ function HomeFigma() {
         </div>
       </article>
 
-      {/* Card 2 */}
+      {/* Card 2 (205:113) */}
       <article className="card card-2" aria-label="Haus Coffee, 4.4 429 reviews, 2.5 miles">
         <div className="card-media">
           <img
@@ -183,51 +179,51 @@ function HomeFigma() {
             width="153"
             height="190"
           />
-          <div className="fab-like alt" aria-hidden="true"></div>
+          <div className="fab-like alt" aria-hidden="true" />
         </div>
         <div className="card-info">
           <h3 className="card-title">Haus Coffee</h3>
           <div className="card-rating">
-            <span className="star-outline" aria-hidden="true"></span>
+            <span className="star-outline" aria-hidden="true" />
             <span className="rating-text">4.4 429 reviews</span>
           </div>
           <p className="distance">2.5 miles</p>
         </div>
       </article>
 
-      {/* Card 3 */}
+      {/* Card 3 (205:172) */}
       <article className="card card-3" aria-label="Home Coffee Roasters, 4.5 1,200 reviews, 3.8 miles">
         <div className="card-media">
-          <div className="card-image placeholder" role="img" aria-label="Cafe preview"></div>
-          <div className="fab-like alt" aria-hidden="true"></div>
+          <div className="card-image placeholder" role="img" aria-label="Cafe preview" />
+          <div className="fab-like alt" aria-hidden="true" />
         </div>
         <div className="card-info">
           <h3 className="card-title">Home Coffee Roasters</h3>
           <div className="card-rating">
-            <span className="star-outline" aria-hidden="true"></span>
+            <span className="star-outline" aria-hidden="true" />
             <span className="rating-text">4.5 1,200 reviews</span>
           </div>
           <p className="distance">3.8 miles</p>
         </div>
       </article>
 
-      {/* Card 4 */}
+      {/* Card 4 (205:184) */}
       <article className="card card-4" aria-label="Haus Coffee, 4.4 429 reviews, 2.5 miles">
         <div className="card-media">
-          <div className="card-image placeholder tall" role="img" aria-label="Cafe preview"></div>
-          <div className="fab-like alt" aria-hidden="true"></div>
+          <div className="card-image placeholder tall" role="img" aria-label="Cafe preview" />
+          <div className="fab-like alt" aria-hidden="true" />
         </div>
         <div className="card-info">
           <h3 className="card-title">Haus Coffee</h3>
           <div className="card-rating">
-            <span className="star-outline" aria-hidden="true"></span>
+            <span className="star-outline" aria-hidden="true" />
             <span className="rating-text">4.4 429 reviews</span>
           </div>
           <p className="distance">2.5 miles</p>
         </div>
       </article>
 
-      {/* Bottom Navigation */}
+      {/* Bottom Navigation (205:169) */}
       <nav className="bottom-nav" aria-label="Bottom navigation">
         <div className="nav-item home selected" role="button" tabIndex={0} aria-current="page" aria-label="Home">
           <img
