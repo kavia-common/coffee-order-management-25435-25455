@@ -1,0 +1,163 @@
+@charset "UTF-8";
+/* Ocean Professional theme variables */
+:root {
+  --primary: #2563EB;
+  --secondary: #F59E0B;
+  --success: #F59E0B;
+  --error: #EF4444;
+  --bg: #f9fafb;       /* background */
+  --surface: #ffffff;  /* surface */
+  --text: #111827;     /* main text */
+  --muted: rgba(17, 24, 39, 0.7);
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.06);
+  --shadow-md: 0 6px 16px rgba(0,0,0,0.08);
+
+  --title-size: 32px;
+  --title-weight: 700;
+  --body-size: 16px;
+  --body-weight: 500;
+}
+
+/* Screen root - fixed to design dimensions for pixel-perfect rendering */
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+}
+
+#screen-8-3 {
+  position: relative;
+  width: 490px;
+  height: 812px;
+  margin: 0 auto;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* underlying solid background from JSON color_ref color_f0edee -> use bg var */
+.screen-surface {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  z-index: 0;
+}
+
+/* Notes frame (FRAME 8:18) - derived from JSON: width 423, height 575, positioned within screen */
+.notes-frame {
+  position: absolute;
+  /* Based on relative offset mapping from JSON dims: center within screen and apply top spacing */
+  left: 34px;   /* (490 - 423) / 2 = ~34px */
+  top: 118px;   /* visual balance */
+  width: 423px;
+  height: 575px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header/title "Notes ✏️" */
+.notes-header {
+  padding: 24px 24px 8px 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  line-height: 45px; /* based on JSON height */
+  letter-spacing: 0.2px;
+  color: var(--text);
+}
+
+/* Body text block width 423 height 501 -> fill card width minus padding */
+.notes-content {
+  padding: 4px 24px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.notes-text {
+  margin: 0;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: 24px;
+  color: var(--muted);
+}
+
+/* Delete-after-reading bar */
+.dar-bar {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 2;
+}
+
+.dar-btn {
+  appearance: none;
+  border: none;
+  background: linear-gradient(180deg, rgba(37,99,235,0.08), rgba(37,99,235,0));
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.dar-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.dar-btn:active {
+  transform: translateY(0);
+}
+
+/* Status text after deletion */
+.dar-status {
+  font-size: 14px;
+  color: var(--error);
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.dar-status.visible {
+  opacity: 1;
+}
+
+/* Hidden assets holder to ensure images are part of the build and paths are exact */
+.hidden-assets {
+  position: absolute;
+  width: 0.5px;
+  height: 0.5px;
+  overflow: hidden;
+  opacity: 0.001; /* nearly invisible but ensures loading */
+  pointer-events: none;
+  bottom: -1000px;
+}
+.hidden-assets img {
+  display: block;
+  width: 1px;
+  height: 1px;
+}

@@ -5,6 +5,7 @@ import './App.css';
 // Router setup
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import HomeFigma from './pages/HomeFigma';
+import NotesFigma from './pages/NotesFigma';
 
 // PUBLIC_INTERFACE
 function App() {
@@ -50,6 +51,9 @@ function App() {
         <p>
           Preview Figma Home Screen: <Link to="/home-figma" className="App-link">/home-figma</Link>
         </p>
+        <p>
+          Preview Notes Screen: <Link to="/notes-figma" className="App-link">/notes-figma</Link>
+        </p>
       </header>
     </div>
   );
@@ -59,6 +63,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home-figma" element={<HomeFigma />} />
+        <Route path="/notes-figma" element={<NotesFigma />} />
       </Routes>
     </Router>
   );
