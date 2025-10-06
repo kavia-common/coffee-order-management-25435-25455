@@ -1,0 +1,385 @@
+:root {
+  /* Ocean Professional theme variables */
+  --primary: #2563EB;
+  --secondary: #F59E0B;
+  --success: #F59E0B;
+  --error: #EF4444;
+  --bg: #f9fafb;       /* background */
+  --surface: #ffffff;  /* surface */
+  --text: #111827;     /* text */
+  --muted: rgba(17, 24, 39, 0.7);
+
+  --blue-10: rgba(37, 99, 235, 0.1);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.06);
+  --shadow-md: 0 6px 16px rgba(0,0,0,0.08);
+
+  --title-size: 28px; /* derived from Figma typo sizes visually matching height 58 with 2 lines */
+  --subtitle-size: 18px;
+  --body-size: 14px;
+
+  --screen-width: 375px;
+  --screen-height: 812px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+  height: 100%;
+}
+
+#screen-1-3 {
+  position: relative;
+  width: var(--screen-width);
+  height: var(--screen-height);
+  margin: 0 auto;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.screen-bg {
+  position: absolute; inset: 0;
+  background: var(--bg);
+}
+
+/* Ellipse 1 (203:66) at x=106, y=-355 relative to doc origin; adjust into our screen (visually top-right) */
+.ellipse-1 {
+  position: absolute;
+  left: 290px; /* tuned to align near top-right visually */
+  top: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+/* Title "Find a coffee shop anywhere" (203:37) x=-165 y=-296 -> place near top-left area with visual spacing */
+.title {
+  position: absolute;
+  left: 24px;
+  top: 88px;
+  margin: 0;
+  width: 216px;
+  height: 58px;
+  font-size: var(--title-size);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.2px;
+  color: var(--text);
+}
+
+/* Search content frame (206:16) dimensions width 320 height 56 at top */
+.search-content {
+  position: absolute;
+  left: 24px; /* align with title's left edge */
+  top: 160px;
+  width: 320px;
+  height: 56px;
+  display: flex;
+  gap: 11px; /* space between search and filter to fit 320 (251 + 58 + gap around equals 320) */
+}
+
+/* Search (206:15) width 251 height 56 with style style_12 -> surface with radius and subtle border/shadow */
+.search {
+  width: 251px;
+  height: 56px;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xs);
+  border: 1px solid rgba(17,24,39,0.08);
+  display: flex;
+  align-items: center;
+}
+
+.search-inner {
+  margin-left: 13px; /* from JSON inner frame x=-152 to -165 is 13px left padding */
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.search-icon {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-label {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: var(--muted);
+  background: transparent;
+  width: 180px;
+}
+.search-input::placeholder { color: var(--muted); }
+
+/* Filter (206:13) width 58 height 56 with rounded background */
+.filter {
+  width: 58px;
+  height: 56px;
+  border: none;
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+  border: 1px solid rgba(17,24,39,0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.filter:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.filter-icon {
+  position: relative;
+  display: inline-block;
+  width: 20px; height: 18px;
+}
+.filter-line.top,
+.filter-line.bottom {
+  position: absolute;
+  left: 10px; /* center adjust for visual match */
+  width: 10px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+}
+.filter-line.top { top: 5px; }
+.filter-line.bottom { bottom: 3px; left: 0px; }
+
+.filter-dot-left {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 8px; height: 8px;
+}
+.filter-dot-right {
+  position: absolute;
+  right: 0px;
+  bottom: 2px;
+  width: 8px; height: 8px;
+  background: var(--text);
+  border-radius: 50%;
+}
+
+/* Featured title (203:70) at y=-132 -> below search */
+.featured-title {
+  position: absolute;
+  left: 24px;
+  top: 236px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--text);
+}
+
+/* Card base styles */
+.card {
+  position: absolute;
+  width: 160px;
+  background: transparent;
+  display: block;
+}
+.card .card-media {
+  position: relative;
+  width: 160px; /* group width in JSON */
+  height: 179px; /* for card 1 & 3 media groups */
+}
+.card .card-image {
+  display: block;
+  width: 153px;
+  height: 168px;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: var(--shadow-sm);
+}
+.card .card-image.placeholder {
+  background: var(--surface);
+  border: 1px solid rgba(17,24,39,0.06);
+}
+.card .card-image.placeholder.tall {
+  height: 190px;
+}
+.card .fab-like {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 36px; height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fab-like .fab-bg {
+  position: absolute;
+  inset: 0;
+  width: 36px; height: 36px;
+  border-radius: 999px;
+}
+.fab-like .fab-heart {
+  position: relative;
+  width: 16px; height: 14px;
+}
+.fab-like.alt {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 999px;
+  border: 1px solid rgba(17,24,39,0.08);
+  box-shadow: var(--shadow-xs);
+}
+
+.card .card-info {
+  position: absolute;
+  left: 0;
+  top: 179px; /* below media group */
+  width: 153px;
+  height: 84px; /* per JSON */
+}
+.card .card-title {
+  margin: 0;
+  padding-top: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: 0.2px;
+  color: var(--text);
+}
+.card .card-rating {
+  margin-top: 7px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 16px;
+}
+.card .star {
+  width: 13px; height: 12px;
+}
+.card .star-outline {
+  width: 13px; height: 12px;
+  display: inline-block;
+  border: 1.5px solid #FACC15; /* amber-like star outline for placeholders */
+  border-radius: 3px;
+}
+.card .rating-text {
+  font-size: 12px;
+  color: var(--muted);
+}
+.card .distance {
+  margin: 6px 0 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Card 1 positioning */
+.card-1 {
+  left: 24px;
+  top: 268px;
+}
+.card-1 .card-media .card-image { width: 153px; height: 168px; }
+
+/* Card 2 positioning */
+.card-2 {
+  left: 191px; /* 24 + 160 + 7 spacing */
+  top: 268px;
+}
+.card-2 .card-media { height: 201px; }
+.card-2 .card-media .card-image { height: 190px; }
+
+/* Card 3 */
+.card-3 {
+  left: 24px;
+  top: 563px; /* 268 + 277 + ~18 spacing */
+}
+
+/* Card 4 */
+.card-4 {
+  left: 191px;
+  top: 563px;
+}
+.card-4 .card-media { height: 201px; }
+.card-4 .card-media .card-image.tall { height: 190px; }
+
+/* Bottom navigation */
+.bottom-nav {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: var(--screen-width);
+  height: 114px;
+  background: linear-gradient(180deg, var(--blue-10), rgba(249,250,251,0));
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 52px;
+  padding-top: 18px;
+}
+.bottom-nav .nav-item {
+  position: relative;
+  width: 70px; height: 58px; /* max size to accommodate selected bg */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.bottom-nav .nav-item:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.home-selected-bg {
+  position: absolute;
+  width: 70px; height: 58px;
+  object-fit: contain;
+  top: 0; left: 0;
+}
+
+.home-icon {
+  position: relative;
+  width: 18px; height: 20px;
+}
+
+.heart-icon, .bookmark-icon {
+  position: relative;
+}
+
+.user .user-dot {
+  position: relative;
+}
+
+/* Hide non-selected background for other items */
+.nav-item.heart,
+.nav-item.bookmark,
+.nav-item.user {
+  width: 24px; height: 24px;
+}
+
+/* Hidden assets container */
+.hidden-assets {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  opacity: 0.001;
+  bottom: -9999px;
+}
+.hidden-assets img {
+  display: block; width: 1px; height: 1px;
+}

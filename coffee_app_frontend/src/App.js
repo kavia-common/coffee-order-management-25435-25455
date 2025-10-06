@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+// Router setup
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import HomeFigma from './pages/HomeFigma';
+
 // PUBLIC_INTERFACE
 function App() {
   const [theme, setTheme] = useState('light');
@@ -16,7 +20,7 @@ function App() {
     setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
   };
 
-  return (
+  const Home = () => (
     <div className="App">
       <header className="App-header">
         <button 
@@ -41,8 +45,22 @@ function App() {
         >
           Learn React
         </a>
+
+        {/* Temporary navigation link for discovery */}
+        <p>
+          Preview Figma Home Screen: <Link to="/home-figma" className="App-link">/home-figma</Link>
+        </p>
       </header>
     </div>
+  );
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home-figma" element={<HomeFigma />} />
+      </Routes>
+    </Router>
   );
 }
 
