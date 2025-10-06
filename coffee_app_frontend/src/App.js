@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 // Router setup
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import HomeFigma from './pages/HomeFigma';
 import NotesFigma from './pages/NotesFigma';
 
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * App
+ * Root application component with routing and simple top navigation.
+ * - Sets "/" to render the HomeFigma page by default.
+ * - Preserves existing "/home-figma" and (renamed) "/notes-figma" routes.
+ * - Includes a theme toggle and a simple top navbar to switch between Home and Notes.
+ */
 function App() {
   const [theme, setTheme] = useState('light');
 
@@ -18,53 +24,58 @@ function App() {
 
   // PUBLIC_INTERFACE
   const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
-  const Home = () => (
-    <div className="App">
-      <header className="App-header">
-        <button 
-          className="theme-toggle" 
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-
-        {/* Temporary navigation link for discovery */}
-        <p>
-          Preview Figma Home Screen: <Link to="/home-figma" className="App-link">/home-figma</Link>
-        </p>
-        <p>
-          Preview Notes Screen: <Link to="/notes-figma" className="App-link">/notes-figma</Link>
-        </p>
-      </header>
-    </div>
+  // Simple top-level navigation bar to switch between Home and Notes
+  const TopNav = () => (
+    <nav
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 16,
+        justifyContent: 'space-between',
+        padding: '12px 16px',
+        borderBottom: '1px solid var(--border-color)',
+        background: 'var(--bg-primary)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 10
+      }}
+      aria-label="Top navigation"
+    >
+      <div style={{ display: 'flex', gap: 12 }}>
+        <Link to="/" style={{ color: 'var(--text-primary)', textDecoration: 'none', fontWeight: 600 }}>
+          Home
+        </Link>
+        <Link to="/notes-figma" style={{ color: 'var(--text-primary)', textDecoration: 'none', fontWeight: 600 }}>
+          Notes
+        </Link>
+      </div>
+      <button
+        className="theme-toggle"
+        onClick={toggleTheme}
+        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      >
+        {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+      </button>
+    </nav>
   );
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home-figma" element={<HomeFigma />} />
-        <Route path="/notes-figma" element={<NotesFigma />} />
-      </Routes>
+      <div className="App">
+        <TopNav />
+        <Routes>
+          {/* Make HomeFigma render at root path */}
+          <Route path="/" element={<HomeFigma />} />
+          {/* Keep existing routes working */}
+          <Route path="/home-figma" element={<HomeFigma />} />
+          <Route path="/notes-figma" element={<NotesFigma />} />
+          {/* Optional: handle unknown routes by redirecting to home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
